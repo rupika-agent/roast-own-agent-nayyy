@@ -12,6 +12,8 @@ def roast_line() -> str:
     line = ROAST.strip()
     if not line:
         raise ValueError("roast line is empty")
+    if "\n" in line or "\r" in line:
+        raise ValueError("roast line must be a single line")
     if len(line) > 200:
         raise ValueError(f"roast line is {len(line)} chars, over the 200 limit")
     return line
@@ -22,6 +24,7 @@ def main() -> int:
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(line, encoding="utf-8")
     print(line)
+    print(f"({len(line)} characters, limit 200)")
     return 0
 
 
